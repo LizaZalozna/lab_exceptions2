@@ -8,14 +8,21 @@ class Program
     static void Main()
     {
         Regex regexExtForImage = new Regex("^((bmp)|(gif)|(tiff?)|(jpe?g)|(png))$", RegexOptions.IgnoreCase);
-        string[] files = Directory.GetFiles(Directory.GetCurrentDirectory());
+        string[] files = Directory.GetFiles(@"images");
+
         foreach (string fileName in files)
         {
+            if (fileName.EndsWith(".DS_Store"))
+            {
+                Console.WriteLine($"Файл {fileName} пропущено, оскільки це не картинка.");
+                continue;
+            }
             string extension = Path.GetExtension(fileName);
             try
             {
                 string fileNameWithoutExt = Path.GetFileNameWithoutExtension(fileName);
-                string newFile = Path.Combine(fileName, $"{fileNameWithoutExt}-mirrored.gif");
+                string newFile = fileNameWithoutExt + "-mirrored.gif";
+
                 Bitmap bitmap = new Bitmap(fileName);
                 Bitmap mirrored = (Bitmap)bitmap.Clone();
                 mirrored.RotateFlip(RotateFlipType.RotateNoneFlipX);
@@ -33,5 +40,6 @@ class Program
                 }
             }
         }
+        Console.ReadKey();
     }
 }
