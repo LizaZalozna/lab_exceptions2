@@ -14,7 +14,12 @@ class Program
             string extension = Path.GetExtension(fileName);
             try
             {
-
+                string fileNameWithoutExt = Path.GetFileNameWithoutExtension(fileName);
+                string newFile = Path.Combine(fileName, $"{fileNameWithoutExt}-mirrored.gif");
+                Bitmap bitmap = new Bitmap(fileName);
+                Bitmap mirrored = (Bitmap)bitmap.Clone();
+                mirrored.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                mirrored.Save(newFile);
             }
         }
     }
