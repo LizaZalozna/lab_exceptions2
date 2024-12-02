@@ -21,6 +21,17 @@ class Program
                 mirrored.RotateFlip(RotateFlipType.RotateNoneFlipX);
                 mirrored.Save(newFile);
             }
+            catch
+            {
+                if (regexExtForImage.IsMatch(extension))
+                {
+                    Console.WriteLine($"Файл {fileName} не був прочитаний, хоча є картинкою.");
+                }
+                else
+                {
+                    Console.WriteLine($"Файл {fileName} не є картинкою.");
+                }
+            }
         }
     }
 }
